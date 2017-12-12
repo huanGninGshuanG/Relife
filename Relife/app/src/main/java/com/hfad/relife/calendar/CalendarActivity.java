@@ -58,16 +58,18 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
         */
         //Async way
 
-
+        /*
+        **It seems the new version of the library no longer needs calendar manager
         //////// This can be done once in another thread
         CalendarManager calendarManager = CalendarManager.getInstance(getApplicationContext());
         calendarManager.buildCal(minDate, maxDate, Locale.getDefault());
         calendarManager.loadEvents(eventList);
         ////////
+        */
 
-        List<CalendarEvent> readyEvents = calendarManager.getEvents();
-        List<DayItem> readyDays = calendarManager.getDays();
-        List<WeekItem> readyWeeks = calendarManager.getWeeks();
+        //List<CalendarEvent> readyEvents = calendarManager.getEvents();
+        //List<DayItem> readyDays = calendarManager.getDays();
+        //List<WeekItem> readyWeeks = calendarManager.getWeeks();
         mAgendaCalendarView.init(eventList, minDate,maxDate, Locale.getDefault(),this);
         mAgendaCalendarView.addEventRenderer(new DrawableEventRenderer());
 
