@@ -102,7 +102,6 @@ public class NoteActivity extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
-
             }
         });
 

@@ -1,7 +1,5 @@
 package com.hfad.relife.Adapter;
 
-
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,12 +24,12 @@ public class NoteDbAdapter {
     public static final int INDEX_CONTENT = INDEX_ID + 1;
     public static final int INDEX_IMPORTANT = INDEX_ID + 2;
     public static final int INDEX_DATETIME = INDEX_ID + 3;
-    //数据库名称、表名称、数据库板本
+    //数据库名称、表名称、数据库版本
     private static final String DB_NAME = "Relife";
     private static final int DB_VERSION = 1;
     private static String TABLE_NAME = "tb1_note";
     //创建数据库表的语句
-    private static final String DATABASE_CREATE =
+    private static final String TABLE_CREATE =
             "CREATE TABLE if not exists " + TABLE_NAME + " ( " +
                     COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
                     COL_CONTENT + " TEXT," +
@@ -132,7 +130,7 @@ public class NoteDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase database){
-            database.execSQL(DATABASE_CREATE);
+            database.execSQL(TABLE_CREATE);
         }
 
         @Override

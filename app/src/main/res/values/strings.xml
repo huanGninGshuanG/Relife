@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Relife</string>
+    <string name="note_activity">note</string>
+    <string name="tdlist_activity">to-do-list</string>
+
     <string name="save_file">Save</string>
     <string name="delete">删除</string>
     <string name="top">置顶</string>
