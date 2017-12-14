@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hfad.relife.Task.TaskActivity"
+    android:animateLayoutChanges="true">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+    <RelativeLayout
+        android:id="@+id/AddTaskLinearLyt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_toolbar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/AddTaskButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDarkComplementAlpha"
+            android:elevation="10dp"
+            android:src="@drawable/plus"
+            android:layout_alignParentRight="true" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_toStartOf="@id/AddTaskButton"
+            android:gravity="center_vertical"
+            app:hintEnabled="false"
+            android:layout_toLeftOf="@id/AddTaskButton">
+
+            <EditText
+                android:id="@+id/AddTaskEditText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimaryComplementAlpha"
+                android:focusableInTouchMode="true"
+                android:hint="Add A Task"
+                android:inputType="textCapWords"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#8effffff"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<Button
+            android:layout_gravity="center_vertical"
+            android:id="@+id/AddTaskButton"
+            android:background="@color/colorPrimaryDarkComplementAlpha"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="+"
+            android:textSize="30dp"
+            android:layout_height="50dp" />-->
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/MainListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AddTaskLinearLyt"
+        android:layout_margin="20dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimaryComplementAlpha"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date"/>
+
+
+</RelativeLayout>
