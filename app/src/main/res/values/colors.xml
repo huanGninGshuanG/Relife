@@ -9,4 +9,18 @@
     <color name="colorAccent">#ff4081</color>
     <color name="colorSecondary">#f378aaaf</color>
     <color name="colorTertiary">#cb5e949c</color>
+
+    <color name="orange_dark">#E64A19</color>
+    <color name="blue_dark">#00537F</color>
+    <color name="yellow">#F5A623</color>
+
+    <!--backgroud color in stereo view-->
+    <color name="bg_blue_deep">#242A38</color>
+    <color name="bg_white">#FFFFFF</color>
+    <color name="bg_gray">#C5C9CC</color>
+
+    <!--font color in stereo view-->
+    <color name="font_gray">#A6AFC6</color>
+    <color name="font_blue_deep">#242A38</color>
+    <color name="font_white">#ffffff</color>
 </resources>

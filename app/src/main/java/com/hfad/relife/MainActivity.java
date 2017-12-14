@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.hfad.relife.Note.NoteActivity;
 import com.hfad.relife.Task.TaskActivity;
+import com.hfad.relife.toss.TossActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickTdlistActivity(View view){
         Intent intent = new Intent(this, TaskActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickTossActivity(View view){
+        Intent intent = new Intent(this, TossActivity.class);
         startActivity(intent);
     }
 }
