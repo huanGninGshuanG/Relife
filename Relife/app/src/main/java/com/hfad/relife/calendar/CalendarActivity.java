@@ -59,7 +59,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
         //Async way
 
         /*
-        **It seems the new version of the library no longer needs calendar manager
+        //It seems the new version of the library no longer enable the async way
         //////// This can be done once in another thread
         CalendarManager calendarManager = CalendarManager.getInstance(getApplicationContext());
         calendarManager.buildCal(minDate, maxDate, Locale.getDefault());

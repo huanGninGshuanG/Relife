@@ -12,4 +12,9 @@
     <item name="android:windowNoTitle">true</item>
   </style>
 
+  <declare-styleable name="RippleView">
+    <attr name="pressed" format="reference"/>
+    <attr name="normal" format="reference"/>
+  </declare-styleable>
+
 </resources>

@@ -18,7 +18,6 @@
         <activity
                 android:name=".Note.NoteActivity"
                 android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity
                 android:name="me.iwf.photopicker.PhotoPickerActivity"
@@ -27,6 +26,9 @@
                 android:name="me.iwf.photopicker.PhotoPagerActivity"
                 android:screenOrientation="portrait"/>
         <activity android:name=".calendar.CalendarActivity">
+
+        </activity>
+        <activity android:name=".toss.TossActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
