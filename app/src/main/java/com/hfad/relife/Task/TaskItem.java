@@ -15,7 +15,7 @@ public class TaskItem implements Parcelable {
     boolean status;
     String deadlineDate;
 
-    TaskItem(String Task,boolean status,String deadlineDate){
+    public TaskItem(String Task,boolean status,String deadlineDate){
         this.Task=Task;
         this.status=status;
         this.deadlineDate=deadlineDate;

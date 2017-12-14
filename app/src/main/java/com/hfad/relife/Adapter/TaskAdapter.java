@@ -36,7 +36,7 @@ import java.util.Calendar;
 public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener {
     private ArrayList<TaskItem> dataSet;
-    private SQLiteDatabase sqlDB;
+    private TdListDbAdapter mTdListDbAdapter;
     private FragmentManager fm;
     private static final boolean USE_BUILDERS = false;
     private static final String TAG = "TaskAdapter";
@@ -54,11 +54,11 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
         TextView dateView;
     }
 
-    public TaskAdapter(ArrayList<TaskItem> data, Context context,SQLiteDatabase sqlDB,FragmentManager fm) {
+    public TaskAdapter(ArrayList<TaskItem> data, Context context,TdListDbAdapter tdListDbAdapter,FragmentManager fm) {
         super(context, R.layout.task_list_row_item, data);
+        this.mTdListDbAdapter = tdListDbAdapter;
         this.dataSet = data;
         this.mContext=context;
-        this.sqlDB=sqlDB;
         this.fm=fm;
     }
 
@@ -66,10 +66,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
     @NonNull
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        //super.getView(position, convertView, parent);
-        // Get the data item for this position
         dataModel = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
         final ViewHolder viewHolder; // view lookup cache stored in tag
 
         final View result;
@@ -110,11 +107,13 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
             public void onClick(View view) {
                 if(viewHolder.cbox.isChecked()){
                     dataModel.setStatus(true);
-                    sqlDB.execSQL("UPDATE ToDoList SET Status='true' WHERE Task='"+dataModel.getTask()+"'");
+                    mTdListDbAdapter.updateTaskItem(dataModel);
+                    //sqlDB.execSQL("UPDATE ToDoList SET Status='true' WHERE Task='"+dataModel.getTask()+"'");
                 }
                 else{
                     dataModel.setStatus(false);
-                    sqlDB.execSQL("UPDATE ToDoList SET Status='false' WHERE Task='"+dataModel.getTask()+"'");
+                    mTdListDbAdapter.updateTaskItem(dataModel);
+                    //sqlDB.execSQL("UPDATE ToDoList SET Status='false' WHERE Task='"+dataModel.getTask()+"'");
                 }
             }
         });
@@ -129,7 +128,8 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
                 final int positionOfTaskInList=dataSet.indexOf(dataModel);
                 final TaskItem delElem=dataSet.remove(positionOfTaskInList);
                 notifyDataSetChanged();
-                sqlDB.execSQL("DELETE FROM ToDoList WHERE Task='"+delElem.getTask()+"'");
+                mTdListDbAdapter.updateTaskItem(delElem);
+                //sqlDB.execSQL("DELETE FROM ToDoList WHERE Task='"+delElem.getTask()+"'");
 
                 /**
                  * Code for Snackbar display and UNDO functionality
@@ -140,7 +140,8 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
                     public void onClick(View v) {
                         dataSet.add(positionOfTaskInList,delElem);
                         notifyDataSetChanged();
-                        sqlDB.execSQL("INSERT INTO ToDoList VALUES('"+delElem.getTask()+"','"+delElem.getStatus()+"','"+delElem.getDeadlineDate()+"')");
+                        mTdListDbAdapter.createTaskItem(delElem);
+                        //sqlDB.execSQL("INSERT INTO ToDoList VALUES('"+delElem.getTask()+"','"+delElem.getStatus()+"','"+delElem.getDeadlineDate()+"')");
                     }
                 });
                 deleteSB.setActionTextColor(getContext().getResources().getColor(R.color.colorAccent));
@@ -183,7 +184,8 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
         choosedModel.setDeadlineDate(date);
         notifyDataSetChanged();
         try{
-            sqlDB.execSQL("UPDATE ToDoList SET DeadlineDate = '" + date + "' WHERE Task='"+choosedModel.getTask()+"'");
+            mTdListDbAdapter.updateTaskItem(choosedModel);
+            //sqlDB.execSQL("UPDATE ToDoList SET DeadlineDate = '" + date + "' WHERE Task='"+choosedModel.getTask()+"'");
             Toast.makeText(getContext(),"update:"+date,Toast.LENGTH_SHORT).show();
         }catch(SQLiteException e){
             Toast.makeText(getContext(),e+"",Toast.LENGTH_SHORT).show();

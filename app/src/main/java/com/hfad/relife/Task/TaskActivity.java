@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.hfad.relife.Adapter.DBHandle;
 import com.hfad.relife.Adapter.TaskAdapter;
+import com.hfad.relife.Adapter.TdListDbAdapter;
 import com.hfad.relife.R;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class TaskActivity extends AppCompatActivity {
     private ArrayAdapter ad=null;
     private EditText addTaskEditText=null;
     private FloatingActionButton addTaskButton=null;
-    private SQLiteDatabase sqlDB=null;
+    private TdListDbAdapter mTdListDbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,22 +38,23 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        sqlDB= DBHandle.createDBTables(this);
-
+        mTdListDbAdapter = new TdListDbAdapter(this);
+        mTdListDbAdapter.open();
         //Toast.makeText(this,"Click on task to delete it!",Toast.LENGTH_SHORT).show();
 
         /**
          * This section retrieves data from DB and adds it to ArrayList @existingTasks
          */
-        Cursor existingTasks=sqlDB.rawQuery("SELECT * FROM ToDoList",null);
+        Cursor existingTasks = mTdListDbAdapter.fetchAllTaskItem();
+        //Cursor existingTasks=sqlDB.rawQuery("SELECT * FROM ToDoList",null);
         if(existingTasks!=null){
             if(existingTasks.moveToFirst()){
                 do{
-                    if(existingTasks.isNull(existingTasks.getColumnIndex("DeadlineDate"))){
-                        mainList.add( new TaskItem( existingTasks.getString( existingTasks.getColumnIndex("Task")) , Boolean.valueOf( existingTasks.getString(existingTasks.getColumnIndex("Status")) ) , null ) );
+                    if(existingTasks.isNull(existingTasks.getColumnIndex(TdListDbAdapter.COL_DEADLINE))){
+                        mainList.add( new TaskItem( existingTasks.getString( existingTasks.getColumnIndex(TdListDbAdapter.COL_TASK)) , Boolean.valueOf( existingTasks.getString(existingTasks.getColumnIndex(TdListDbAdapter.COL_STATUS)) ) , null ) );
                     }
                     else{
-                        mainList.add( new TaskItem( existingTasks.getString( existingTasks.getColumnIndex("Task")) , Boolean.valueOf( existingTasks.getString(existingTasks.getColumnIndex("Status")) ) , existingTasks.getString( existingTasks.getColumnIndex("DeadlineDate")) ) );
+                        mainList.add( new TaskItem( existingTasks.getString( existingTasks.getColumnIndex(TdListDbAdapter.COL_TASK)) , Boolean.valueOf( existingTasks.getString(existingTasks.getColumnIndex(TdListDbAdapter.COL_STATUS)) ) , existingTasks.getString( existingTasks.getColumnIndex(TdListDbAdapter.COL_DEADLINE)) ) );
                     }
 
                 }while (existingTasks.moveToNext());
@@ -62,7 +63,7 @@ public class TaskActivity extends AppCompatActivity {
         Toast.makeText(this,mainList.size()+" tasks present",Toast.LENGTH_SHORT).show();
 
         mainListView=(ListView) findViewById(R.id.MainListView);
-        ad=new TaskAdapter((ArrayList) mainList,getApplicationContext(),sqlDB,getSupportFragmentManager());
+        ad=new TaskAdapter((ArrayList) mainList,getApplicationContext(), mTdListDbAdapter,getSupportFragmentManager());
 
         if(mainListView!=null) {
             mainListView.setAdapter(ad);
@@ -77,7 +78,8 @@ public class TaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!addTaskEditText.getText().toString().equals("")){
                     try{
-                        sqlDB.execSQL("INSERT INTO ToDoList VALUES('"+addTaskEditText.getText().toString().trim()+"','false',NULL)");
+                        mTdListDbAdapter.createTaskItem(addTaskEditText.getText().toString().trim(),1,null);
+                        //sqlDB.execSQL("INSERT INTO ToDoList VALUES('"+addTaskEditText.getText().toString().trim()+"','false',NULL)");
                         mainList.add( new TaskItem( addTaskEditText.getText().toString().trim() , false , null) );
                         addTaskEditText.setText("");
                         ad.notifyDataSetChanged();
@@ -88,7 +90,11 @@ public class TaskActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mTdListDbAdapter.close();
     }
 }

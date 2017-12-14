@@ -92,7 +92,7 @@ public class NoteDbAdapter {
                 cursor.getString(INDEX_DATETIME));
     }
 
-    //根据ID取出便签
+    //根据取出数据库的所有便签
     public Cursor fetchAllNotes(){
         Cursor cursor = mDb.query(TABLE_NAME,
                 new String[]{COL_ID,COL_CONTENT,COL_IMPORTANT,COL_DATETIME},
@@ -103,7 +103,7 @@ public class NoteDbAdapter {
         return cursor;
     }
 
-    //根据便签对象取出标签
+    //根据便签对象更新标签
     public int updateNote(Note note){
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_CONTENT,note.getContent());
@@ -123,7 +123,7 @@ public class NoteDbAdapter {
         mDb.delete(TABLE_NAME,null,null);
     }
 
-    private static class RelifeDatabaseHelper extends SQLiteOpenHelper{
+    private class RelifeDatabaseHelper extends SQLiteOpenHelper{
         public RelifeDatabaseHelper(Context context){
             super(context, DB_NAME, null, DB_VERSION);
         }
