@@ -49,6 +49,7 @@ public class NoteDbAdapter {
     public void open() throws SQLiteException {
         mDatabaseHelper = new RelifeDatabaseHelper(mContext);
         mDb = mDatabaseHelper.getWritableDatabase();
+        mDb.execSQL(TABLE_CREATE);
     }
 
     //close database

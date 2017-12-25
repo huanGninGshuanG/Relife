@@ -22,4 +22,13 @@
         android:id="@+id/tdlist_activity"
         android:onClick="onClickTdlistActivity"
         />
+
+    <Button
+        android:text="@string/async_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:id="@+id/async_note"
+        android:onClick="onClickAsyncActivity"
+        />
 </RelativeLayout>

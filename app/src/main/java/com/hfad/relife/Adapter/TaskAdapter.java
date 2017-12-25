@@ -128,7 +128,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
                 final int positionOfTaskInList=dataSet.indexOf(dataModel);
                 final TaskItem delElem=dataSet.remove(positionOfTaskInList);
                 notifyDataSetChanged();
-                mTdListDbAdapter.updateTaskItem(delElem);
+                mTdListDbAdapter.deleteTaskItemByName(delElem.getTask());
                 //sqlDB.execSQL("DELETE FROM ToDoList WHERE Task='"+delElem.getTask()+"'");
 
                 /**

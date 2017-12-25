@@ -60,7 +60,6 @@ public class NoteActivity extends AppCompatActivity {
         mNoteDbAdapter.close();
     }
 
-
     //初始化Toolbar
       private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,7 +101,6 @@ public class NoteActivity extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
-
             }
         });
 
@@ -174,25 +172,4 @@ public class NoteActivity extends AppCompatActivity {
         mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         mFloatingActionButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
-
-    /**
-     * 初始化数据库，向数据库插入一些数据
-     */
-    /*private void insertSomeReminders() {
-        mNoteDbAdapter.createNote("Buy Learn Android Studio", true,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Send Dad birthday gift", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Dinner at the Gage on Friday", true,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("String squash racket", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Shovel and salt walkways", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Prepare Advanced Android syllabus", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Buy new office chair", true,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Call Auto-body shop for quote", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Renew membership to club", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Buy new Galaxy Android phone", true,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Sell old Android phone - auction", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Buy new paddles for kayaks", true,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Call accountant about tax returns", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Buy 300,000 shares of Google", false,DateUtil.formatDateTime());
-        mNoteDbAdapter.createNote("Call the Dalai Lama back", true,DateUtil.formatDateTime());
-    }*/
 }

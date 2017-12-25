@@ -12,15 +12,6 @@
         android:paddingTop="?attr/actionBarSize"
         />
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:clipToPadding="false"
-        app:titleTextColor="@android:color/white"
-        />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/button_add_note"
         android:layout_width="wrap_content"
@@ -34,5 +25,13 @@
         app:pressedTranslationZ="8dp"
         app:rippleColor="#ff87eb"
         />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:clipToPadding="false"
+        app:titleTextColor="@android:color/white" />
 
 </FrameLayout>
