@@ -1,8 +1,5 @@
 <?php
-	$host="localhost";
-	$username="root";
-	$password="701016qqYY3210.";
-	$db_name="relife";
+	require_once 'login.php';
 	
 	$con = new mysqli($host, $username, $password, $db_name);
 	if(mysqli_connect_errno()){
