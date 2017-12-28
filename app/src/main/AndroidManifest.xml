@@ -19,7 +19,7 @@
         <activity android:name=".Note.NoteContentActivity" />
         <activity
             android:name=".Note.NoteActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait" />
@@ -38,8 +38,19 @@
         <activity
             android:name=".Task.TaskActivity"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".AsyncActivity"></activity>
-    </application>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".AsyncActivity"/>
 
+        <receiver android:name="com.hfad.relife.Alarm.LoongggAlarmReceiver">
+            <intent-filter>
+                <action android:name="com.loonggg.alarm.clock"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".Alarm.ClockAlarmActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            ></activity>
+
+    </application>
 </manifest>

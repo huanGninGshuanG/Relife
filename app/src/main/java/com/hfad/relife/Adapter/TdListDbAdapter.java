@@ -118,6 +118,10 @@ public class TdListDbAdapter {
         mDb.delete(TABLE_NAME, COL_TASK+"=?",new String[]{task});
     }
 
+    public void deleteTaskItemByDeadline(String deadline){
+        mDb.delete(TABLE_NAME, COL_DEADLINE+"=?",new String[]{deadline});
+    }
+
     //删除所有TaskItem
     public void deleteAllTaskItem(){
         mDb.delete(TABLE_NAME,null,null);
