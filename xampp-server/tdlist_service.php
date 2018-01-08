@@ -1,6 +1,8 @@
 <?php
 require_once 'login.php';
 $conn = new mysqli($host, $username, $password, $db_name);
+echo "<link rel='stylesheet' type='text/css' href='./css/style.css' />";
+echo "<link rel=\"stylesheet\" href=\"https://unpkg.com/mobi.css/dist/mobi.min.css\">";
 if($conn->connect_error) die($conn->connect_error);
 
 if(isset($_POST['delete'])&&isset($_POST['task']))
@@ -27,12 +29,16 @@ if(isset($_POST['task'])&&
 }
 
 echo <<<_END
-<form action='tdlist_service.php' method='post'><pre>
+<div class="flex-center">
+    <div class="container">
+<form action='tdlist_service.php' method='post' class="form">
 		   Task <input type='text' name='task'>
-		 Status <input type='text' name='status'>
-               Deadline <input type='text' name='deadlinedate'>
-				   <input type='submit' value='ADD TASK'>
-	</pre></form>
+		  Status <input type='text' name='status'>
+              Deadline <input type='text' name='deadlinedate'>
+				   <input type='submit' class="btn btn-small submit" value='ADD'>
+</form>
+	</div>
+</div>
 _END;
 
 $query = "SELECT * FROM tb2_tdlist";
@@ -47,15 +53,16 @@ for($j=0; $j<$rows; ++$j)
     $row = $result->fetch_array(MYSQLI_NUM);
 
     echo <<<_END
+<br/><br/>
 <pre>
 		   Task: $row[1]
 		 Status: $row[2]
                Deadline: $row[3]
 </pre>
-<form action='tdlist_service.php' method='post'>
+<form action='tdlist_service.php' method='post' class="form">
 <input type='hidden' name='delete' value='yes'>
 <input type='hidden' name='task' value='$row[1]'>
-<input type='submit' value='DELETE TASK'></form>
+<input type='submit' value='DELETE' class="btn btn-small submit"><br></form>
 _END;
 }
 

@@ -1,6 +1,6 @@
 <?php
 	require_once 'login.php';
-	
+
 	$con = new mysqli($host, $username, $password, $db_name);
 	if(mysqli_connect_errno()){
 		echo "Error: Could not connect to database.";
