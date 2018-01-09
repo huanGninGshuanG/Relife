@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hfad.relife">
+          <!--使用和系统相同的签名
+          android:sharedUserId="android.uid.system"
+          -->
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,6 +12,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <!--需要系统权限-->
+    <!--uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/-->
 
     <application
         android:allowBackup="true"
@@ -16,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Note.NoteContentActivity" />
+        <activity
+                android:name=".Note.NoteContentActivity" />
         <activity
             android:name=".Note.NoteActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -41,7 +48,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AsyncActivity"/>
 
-        <receiver android:name="com.hfad.relife.Alarm.LoongggAlarmReceiver">
+        <receiver
+                android:name="com.hfad.relife.Alarm.LoongggAlarmReceiver">
             <intent-filter>
                 <action android:name="com.loonggg.alarm.clock"/>
             </intent-filter>
@@ -49,8 +57,12 @@
 
         <activity
             android:name=".Alarm.ClockAlarmActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            ></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+
+        <activity
+                android:name=".Usage.UsageActivity">
+        </activity>
 
     </application>
 </manifest>
