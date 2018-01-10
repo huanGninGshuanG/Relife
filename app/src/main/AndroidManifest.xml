@@ -37,8 +37,13 @@
         <activity
                 android:name=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
+
         <activity
                 android:name=".Task.TaskActivity"
                 android:supportsRtl="true"
@@ -56,15 +61,15 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
         <activity android:name=".Usage.UsageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <activity android:name=".microphone.AudioRecordingActivity">
 
+        </activity>
+
+        <activity android:name=".toss.TossActivity">
+            
         </activity>
     </application>
 
