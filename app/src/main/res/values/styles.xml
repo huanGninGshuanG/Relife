@@ -47,4 +47,14 @@
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowNoTitle">true</item>
   </style>
+
+  <style name="PackageNameFont" parent="@android:style/TextAppearance.Small">
+    <item name="android:textColor">@color/line_and_outline_grey</item>
+  </style>
+
+  <!--Toss界面-->
+  <declare-styleable name="RippleView">
+    <attr name="pressed" format="reference"/>
+    <attr name="normal" format="reference"/>
+  </declare-styleable>
 </resources>

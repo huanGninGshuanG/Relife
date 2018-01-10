@@ -18,7 +18,7 @@
         android:text="@string/tdlist_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:id="@+id/tdlist_activity"
         android:onClick="onClickTdlistActivity"
         />
@@ -27,8 +27,36 @@
         android:text="@string/async_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="120dp"
         android:id="@+id/async_note"
         android:onClick="onClickAsyncActivity"
         />
+
+    <Button
+        android:text="@string/usage_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:id="@+id/app_usage"
+        android:onClick="onClickUsageActivity"
+    />
+
+    <Button
+            android:text="@string/toss_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="240dp"
+            android:id="@+id/btn_toss"
+            android:onClick="onClickTossActivity"
+    />
+
+    <Button
+            android:text="@string/audio_reorder_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:id="@+id/audio_recorder"
+            android:onClick="onClickAudioRecordingActivity"
+    />
+
 </RelativeLayout>

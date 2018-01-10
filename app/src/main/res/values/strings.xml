@@ -5,6 +5,9 @@
     <string name="async_activity">async</string>
     <string name="asyncnote_activity">async note</string>
     <string name="asynctdlist_activity">async tdlist</string>
+    <string name="usage_activity">usage</string>
+    <string name="toss_activity">toss</string>
+    <string name="audio_reorder_activity">recorder</string>
 
     <string name="save_file">Save</string>
     <string name="delete">删除</string>
@@ -20,5 +23,17 @@
     <string name="action_take_photo">拍照</string>
 
     <!--toast提示符-->
+
+
+    <!--Usage输出-->
+    <string name="open_app_usage_setting">Open Apps with usage access settings</string>
+    <string name="last_time_used">"上次使用时间 "</string>
+    <string name="time_span">"时间范围 "</string>
+    <string name="total_time_foreground">"总计使用时间："</string>
+    <string name="launch_count">"使用次数："</string>
+    <string name="explanation_access_to_appusage_is_not_enabled">Failed to retrieve app usage
+        statistics. You may need to enable access
+        for this app through Settings > Security > Apps with usage access
+    </string>
 
 </resources>

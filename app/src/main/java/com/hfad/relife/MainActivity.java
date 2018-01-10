@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.hfad.relife.Note.NoteActivity;
 import com.hfad.relife.Task.TaskActivity;
+import com.hfad.relife.Usage.UsageActivity;
+import com.hfad.relife.microphone.AudioRecordingActivity;
+import com.hfad.relife.toss.TossActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAsyncActivity(View view){
         Intent intent = new Intent(this, AsyncActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickUsageActivity(View view){
+        Intent intent = new Intent(this, UsageActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickTossActivity(View view){
+        Intent intent = new Intent(this, TossActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickAudioRecordingActivity(View view){
+        Intent intent = new Intent(this, AudioRecordingActivity.class);
         startActivity(intent);
     }
 }
