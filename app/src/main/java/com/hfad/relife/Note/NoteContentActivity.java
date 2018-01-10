@@ -1,11 +1,18 @@
 package com.hfad.relife.Note;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.text.format.DateUtils;
+import android.os.Build;
+import android.os.StrictMode;
+import android.provider.Settings;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,7 +63,15 @@ public class NoteContentActivity extends AppCompatActivity {
     private Intent mIntent;
     private int mNoteID;
 
-    private static int REQUEST_ORIGINAL = 0;
+    private static final int REQUEST_CODE = 0;
+    private boolean isRequireCheck; //是否需要系统权限检测
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
+    private static final int PERMISSION_REQUEST_CODE = 0;
+    private static final String PACKAGE_URL_SCHEMA = "package:";
+    //private static int REQUEST_ORIGINAL = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +108,12 @@ public class NoteContentActivity extends AppCompatActivity {
             Log.d("NoteContentActivity", mNote.getContent() + isImportant);
         }
         initToolbar(isImportant);
+        isRequireCheck = true;
+
+        //解决相机拍照出现的问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
     }
 
     @Override
@@ -125,6 +146,7 @@ public class NoteContentActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -162,7 +184,18 @@ public class NoteContentActivity extends AppCompatActivity {
                     }
                 }
             case R.id.action_take_photo:
-                callGallery();
+                if (isRequireCheck) {
+                    //权限没有授权，进入授权界面
+                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
+                    }else{
+                        callGallery();
+                    }
+                }else{
+                    isRequireCheck = true;
+                    callGallery();
+                }
                 break;
         }
         return  super.onOptionsItemSelected(item);

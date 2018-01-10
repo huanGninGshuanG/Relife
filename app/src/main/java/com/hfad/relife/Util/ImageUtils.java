@@ -27,13 +27,13 @@ public class ImageUtils {
         BitmapFactory.Options options = null;
         if (size > 0) {
             BitmapFactory.Options info = new BitmapFactory.Options();
-            /**如果设置true的时候，decode时候Bitmap返回的为数据将空*/
+            /*如果设置true的时候，decode时候Bitmap返回的为数据将空*/
             info.inJustDecodeBounds = false;
             decodeBitmap(path, data, context, uri, info);
             int dim = info.outWidth;
             if (!width) dim = Math.max(dim, info.outHeight);
             options = new BitmapFactory.Options();
-            /**把图片宽高读取放在Options里*/
+            /*把图片宽高读取放在Options里*/
             options.inSampleSize = size;
         }
         Bitmap bm = null;
@@ -144,7 +144,7 @@ public class ImageUtils {
         return newBitmap;
     }
 
-    /**
+    /*
      * 根据view的宽度，动态缩放bitmap尺寸
      *
      * @param width
@@ -161,7 +161,7 @@ public class ImageUtils {
 //        return BitmapFactory.decodeFile(filePath, options);
 //    }
 
-    /**
+    /*
      * 对图片进行按比例设置
      * @param bitmap 要处理的图片
      * @return 返回处理好的图片

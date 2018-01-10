@@ -126,7 +126,7 @@ public class AsyncActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... strings){
-                HashMap<String,String> hashMap = new HashMap<String,String>();
+                HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("content",content);
                 hashMap.put("important",String.valueOf(important));
                 hashMap.put("last_modified_time",time);

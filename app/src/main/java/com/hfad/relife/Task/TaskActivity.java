@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public class TaskActivity extends AppCompatActivity {
-    private List<TaskItem> mainList=new ArrayList<TaskItem>();
+    private List<TaskItem> mainList=new ArrayList<>();
     private ListView mainListView=null;
     private ArrayAdapter ad=null;
     private EditText addTaskEditText=null;
@@ -41,7 +41,7 @@ public class TaskActivity extends AppCompatActivity {
         mTdListDbAdapter.open();
         //Toast.makeText(this,"Click on task to delete it!",Toast.LENGTH_SHORT).show();
 
-        /**
+        /*
          * This section retrieves data from DB and adds it to ArrayList @existingTasks
          */
         Cursor existingTasks = mTdListDbAdapter.fetchAllTaskItem();

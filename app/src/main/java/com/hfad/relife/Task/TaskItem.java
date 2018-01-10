@@ -3,9 +3,6 @@ package com.hfad.relife.Task;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Created by 18359 on 2017/12/13.
  */

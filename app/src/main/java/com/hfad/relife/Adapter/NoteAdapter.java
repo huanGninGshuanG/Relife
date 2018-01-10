@@ -108,7 +108,7 @@ public class NoteAdapter extends RecyclerViewCursorAdapter<NoteAdapter.NoteViewH
     class NoteViewHolder extends RecyclerView.ViewHolder{
         private TextView tv;
         private TextView tv_dateTime;
-        private View mRowtab;       //
+        private View mRowtab;
         private Button btnTop;
         private Button btnDelete;
         private View root;

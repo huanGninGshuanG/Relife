@@ -1,6 +1,6 @@
 package com.hfad.relife.Adapter;
 
-/**
+/*
  * Created by 18359 on 2017/12/13.
  */
 
@@ -122,7 +122,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
         viewHolder.delIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
+                /*
                  * On clicking delete ImageView, this function is invoked
                  * Code for adding Task is in MainActivity.java
                  */
@@ -132,7 +132,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
                 mTdListDbAdapter.deleteTaskItemByName(delElem.getTask());
                 //sqlDB.execSQL("DELETE FROM ToDoList WHERE Task='"+delElem.getTask()+"'");
 
-                /**
+                /*
                  * Code for Snackbar display and UNDO functionality
                  */
                 final Snackbar deleteSB = Snackbar.make(view, "Task deleted", Snackbar.LENGTH_LONG);
@@ -153,7 +153,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
         viewHolder.calendarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
+                /*
                  * This part will open the dialog box containing  layout inflated and
                  * Set Date, Clear Date and Cancel buttons
                  */
@@ -209,7 +209,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
     }
 
     private DialogFragment createDialogWithBuilders() {
-        BottomSheetPickerDialog.Builder builder = null;
+        BottomSheetPickerDialog.Builder builder;
         boolean custom = true;
         boolean customDark = true;
 
