@@ -4,7 +4,10 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.*;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hfad.relife.Adapter.UsageListAdapter;
 import com.hfad.relife.R;
 
@@ -35,6 +44,8 @@ public class UsageFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     Button mOpenUsageSettingButton;
     Spinner mSpinner;
+    PieChart mChart;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -71,6 +82,17 @@ public class UsageFragment extends Fragment {
 
         mUsageListAdapter = new UsageListAdapter();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_app_usage);
+        mChart = (PieChart) rootView.findViewById(R.id.pie_chart);
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
+        mChart.setDrawCenterText(true);
+        mChart.setCenterText("App 使用时间");
+        mChart.setCenterTextTypeface(tf);
+
+        mChart.getDescription().setEnabled(true);
+        mChart.setUsePercentValues(true);
+        mChart.getLegend().setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);
+        mChart.setHighlightPerTapEnabled(true);
+
         mLayoutManager = mRecyclerView.getLayoutManager();
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setAdapter(mUsageListAdapter);
@@ -92,6 +114,7 @@ public class UsageFragment extends Fragment {
                             getUsageStatistics(statsUsageInterval.mInterval);
                     Collections.sort(usageStatsList, new LastTimeLaunchedComparatorDesc());
                     updateAppsList(usageStatsList);
+                    updatePieChart(usageStatsList);
                 }
             }
 
@@ -137,6 +160,8 @@ public class UsageFragment extends Fragment {
         return queryUsageStats;
     }
 
+
+
     /**
      * Updates the {@link #mRecyclerView} with the list of {@link UsageStats} passed as an argument.
      *
@@ -166,6 +191,56 @@ public class UsageFragment extends Fragment {
         mRecyclerView.scrollToPosition(0);
     }
 
+    void updatePieChart(List<UsageStats> usageStatsList){
+        List<PieEntry> entries = new ArrayList<>();
+        float totalTime = 0.0f;
+        Context context =getContext();
+        PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> list = packageManager.getInstalledPackages(packageManager.GET_UNINSTALLED_PACKAGES);
+        HashMap<String, String> appNames = new HashMap<>();
+        for(PackageInfo packageInfo : list){
+            String appName=packageInfo.applicationInfo.loadLabel(packageManager).toString();
+            //System.out.println(appName);
+            //获取到应用所在包的名字,即在AndriodMainfest中的package的值。
+            String packageName=packageInfo.packageName;
+            //System.out.println(packageName);
+            if((packageInfo.applicationInfo.flags&ApplicationInfo.FLAG_SYSTEM)==0){
+                appNames.put(packageName,appName);
+                System.out.println(packageName);
+                System.out.println(appName);
+            }
+
+        }
+        Iterator infoIterator = appNames.entrySet().iterator();
+        for (int i = 0; i<usageStatsList.size();i++){
+            UsageStats u = usageStatsList.get(i);
+            totalTime += u.getTotalTimeInForeground();
+        }
+        for (int i = 0; i < usageStatsList.size(); i++){
+            UsageStats u = usageStatsList.get(i);
+            float time = u.getTotalTimeInForeground()/totalTime;
+
+            String name ="";
+            while(infoIterator.hasNext()){
+                HashMap.Entry entry = (Map.Entry) infoIterator.next();
+                //System.out.println(String.valueOf(entry.getKey()));
+                //System.out.println(u.getPackageName());
+                if (entry.getKey().equals(u.getPackageName())){
+                    System.out.println(entry.getKey());
+                    name = (String) entry.getValue();
+                }
+            }
+            entries.add(new PieEntry(time,name));
+        }
+
+        //System.out.println(entries.size());
+        PieDataSet set = new PieDataSet(entries,"");
+        set.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        PieData data = new PieData(set);
+        mChart.setData(data);
+        mChart.invalidate();
+    }
+
     /**
      * The {@link Comparator} to sort a collection of {@link UsageStats} sorted by the timestamp
      * last time the app was used in the descendant order.
@@ -174,7 +249,7 @@ public class UsageFragment extends Fragment {
 
         @Override
         public int compare(UsageStats left, UsageStats right) {
-            return Long.compare(right.getLastTimeUsed(), left.getLastTimeUsed());
+            return Long.compare(right.getTotalTimeInForeground(), left.getTotalTimeInForeground());
         }
     }
 

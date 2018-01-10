@@ -1,8 +1,13 @@
 package com.hfad.relife.Usage;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.hfad.relife.R;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class UsageActivity extends AppCompatActivity {
 

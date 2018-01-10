@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="usage_row_height">72dp</dimen>
+    <dimen name="usage_row_height">88dp</dimen>
 
     <!-- Define standard dimensions to comply with Holo-style grids and rhythm. -->
 
