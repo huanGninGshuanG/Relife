@@ -24,6 +24,7 @@ public class AsyncActivity extends AppCompatActivity {
     private static NoteDbAdapter mNoteDbAdapter;
     private static TdListDbAdapter mTdlistDbAdapter;
     ProgressDialog pd;
+    private int num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class AsyncActivity extends AppCompatActivity {
         mTdlistDbAdapter = new TdListDbAdapter(this);
         mNoteDbAdapter.open();
         mTdlistDbAdapter.open();
+        num=1;
     }
 
     public void onClickAsyncNoteActivity(View view){
@@ -110,10 +112,14 @@ public class AsyncActivity extends AppCompatActivity {
                 //pd.dismiss();
                 int count = Integer.parseInt(result.trim());
                 if(count>0){
-                    Toast.makeText(AsyncActivity.this, "Response:"+result, Toast.LENGTH_SHORT).show();
+                    if(Integer.valueOf(result)==1){
+                        Toast.makeText(AsyncActivity.this, "Response: 第" + (num++) +"条记录上传成功", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }).execute(url);
+
+        num=1;
     }
 
     private void insertNote(String url, final int important, final String content, final String time){
@@ -140,10 +146,13 @@ public class AsyncActivity extends AppCompatActivity {
                 //pd.dismiss();
                 int count = Integer.parseInt(result.trim());
                 if(count>0){
-                    Toast.makeText(AsyncActivity.this, "Response:"+result, Toast.LENGTH_SHORT).show();
+                    if(Integer.valueOf(result)==1){
+                        Toast.makeText(AsyncActivity.this, "Response: 第" + (num++) +"条记录上传成功", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }).execute(url);
+        num=1;
     }
 
     @Override
