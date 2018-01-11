@@ -1,5 +1,6 @@
 package com.hfad.relife.Util;
 
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +12,7 @@ public class AudioRecorderUtils {
 
     private String filePath;
     private MediaRecorder mMediaRecorder;
+    private static MediaRecorder m = null;
     private final String TAG = "MediaRecord";
     public static final int MAX_LENGTH = 1000 * 60 * 10;// 最大录音时长1000*60*10;
 
@@ -27,6 +29,12 @@ public class AudioRecorderUtils {
     private long startTime;
     private long endTime;
 
+    private MediaRecorder getInstance(){
+        if (m == null)
+            m = new MediaRecorder();
+        return m;
+    }
+
     /**
      * 开始录音 使用amr格式
      *      录音文件
@@ -35,8 +43,7 @@ public class AudioRecorderUtils {
     public void startRecord() {
         // 开始录音
         /* ①Initial：实例化MediaRecorder对象 */
-        if (mMediaRecorder == null)
-            mMediaRecorder = new MediaRecorder();
+        mMediaRecorder = getInstance();
         try {
             /* ②setAudioSource/setVedioSource */
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 设置麦克风
