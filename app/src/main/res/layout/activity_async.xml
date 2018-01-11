@@ -6,22 +6,33 @@
     android:layout_height="match_parent"
     tools:context="com.hfad.relife.AsyncActivity">
 
-    <Button
-        android:text="@string/asyncnote_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:id="@+id/async"
-        android:onClick="onClickAsyncNoteActivity"
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+        <Button
+                android:text="@string/asyncnote_activity"
+                android:textSize="30dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_marginTop="50dp"
+
+                android:drawableTop="@drawable/up_big"
+                android:id="@+id/async"
+                android:onClick="onClickAsyncNoteActivity"
+        />
+        <Button
+                android:text="@string/asynctdlist_activity"
+                android:textSize="30dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_marginTop="80dp"
+
+                android:drawableTop="@drawable/up_big"
+                android:id="@+id/async_todolist"
+                android:onClick="onClickAsyncTdlistActivity"
         />
 
-    <Button
-        android:text="@string/asynctdlist_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:id="@+id/async_todolist"
-        android:onClick="onClickAsyncTdlistActivity"
-        />
+    </LinearLayout>
+
 
 </RelativeLayout>

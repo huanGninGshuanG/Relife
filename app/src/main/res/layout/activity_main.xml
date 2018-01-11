@@ -6,57 +6,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.hfad.relife.MainActivity">
-    <Button
-        android:text="@string/note_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/note_activity"
-        android:onClick="onClickNoteActivity"
+
+    <RelativeLayout
+            android:id="@+id/ly_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/bg_blue_deep">
+
+        <TextView
+                android:id="@+id/txt_topbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/font_white"
+                android:text="Relife"/>
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/bg_white"
+                android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <Button
+                android:text="@string/note_activity"
+                android:drawableTop="@drawable/note"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="150dp"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/note_activity"
+                android:onClick="onClickNoteActivity"
+
         />
 
-    <Button
-        android:text="@string/tdlist_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:id="@+id/tdlist_activity"
-        android:onClick="onClickTdlistActivity"
+        <Button
+                android:text="@string/tdlist_activity"
+                android:drawableTop="@drawable/cal"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="150dp"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/tdlist_activity"
+                android:onClick="onClickTdlistActivity"
+        />
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <Button
+                android:text="@string/async_activity"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="250dp"
+                android:layout_marginLeft="60dp"
+                android:drawableTop="@drawable/syn"
+                android:id="@+id/async_note"
+                android:onClick="onClickAsyncActivity"
         />
 
-    <Button
-        android:text="@string/async_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:id="@+id/async_note"
-        android:onClick="onClickAsyncActivity"
+        <Button
+                android:text="@string/usage_activity"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height"
+                android:drawableTop="@drawable/app"
+                android:layout_marginTop="250dp"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/app_usage"
+                android:onClick="onClickUsageActivity"
+        />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <Button
+                android:text="@string/toss_activity"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="350dp"
+                android:layout_marginLeft="60dp"
+                android:drawableTop="@drawable/toss"
+                android:id="@+id/btn_toss"
+                android:onClick="onClickTossActivity"
         />
 
-    <Button
-        android:text="@string/usage_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:id="@+id/app_usage"
-        android:onClick="onClickUsageActivity"
-    />
+        <Button
+                android:text="@string/audio_reorder_activity"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height"
+                android:drawableTop="@drawable/rec"
+                android:layout_marginTop="350dp"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/audio_recorder"
+                android:onClick="onClickAudioRecordingActivity"
+        />
+    </LinearLayout>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/textView"
+            android:background="@color/bg_blue_deep"
+            android:layout_alignParentStart="true"/>
 
-    <Button
-            android:text="@string/toss_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="240dp"
-            android:id="@+id/btn_toss"
-            android:onClick="onClickTossActivity"
-    />
-
-    <Button
-            android:text="@string/audio_reorder_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
-            android:id="@+id/audio_recorder"
-            android:onClick="onClickAudioRecordingActivity"
-    />
 
 </RelativeLayout>

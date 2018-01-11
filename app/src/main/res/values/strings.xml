@@ -3,8 +3,8 @@
     <string name="note_activity">note</string>
     <string name="tdlist_activity">to do list</string>
     <string name="async_activity">async</string>
-    <string name="asyncnote_activity">async note</string>
-    <string name="asynctdlist_activity">async tdlist</string>
+    <string name="asyncnote_activity">note</string>
+    <string name="asynctdlist_activity">tdlist</string>
     <string name="usage_activity">usage</string>
     <string name="toss_activity">toss</string>
     <string name="audio_reorder_activity">recorder</string>
