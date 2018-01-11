@@ -11,4 +11,8 @@ public class DateUtil {
     public static String formatDateTime() {
         return new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").format(new Date(System.currentTimeMillis()));
     }
+
+    public static String time(){
+        return new SimpleDateFormat("yyyyMMddHHmmss").format((new Date(System.currentTimeMillis())));
+    }
 }

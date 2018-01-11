@@ -2,7 +2,6 @@ package com.hfad.relife.Usage;
 
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -138,11 +137,9 @@ public class UsageFragment extends Fragment {
         // Get the app statistics since one year ago from the current time.
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -1);
-
         List<UsageStats> queryUsageStats = mUsageStatsManager
                 .queryUsageStats(intervalType, cal.getTimeInMillis(),
                         System.currentTimeMillis());
-
         if (queryUsageStats.size() == 0) {
             Log.i(TAG, "The user may not allow the access to apps usage. ");
             Toast.makeText(getActivity(),
@@ -170,9 +167,22 @@ public class UsageFragment extends Fragment {
     //VisibleForTesting
     void updateAppsList(List<UsageStats> usageStatsList) {
         List<CustomUsageStats> customUsageStatsList = new ArrayList<>();
+        HashMap<String, String> appNames = getAppPackageNames();
+        Iterator infoIterator = appNames.entrySet().iterator();
         for (int i = 0; i < usageStatsList.size(); i++) {
             CustomUsageStats customUsageStats = new CustomUsageStats();
             customUsageStats.usageStats = usageStatsList.get(i);
+            String name ="";
+            while(infoIterator.hasNext()){
+                HashMap.Entry entry = (Map.Entry) infoIterator.next();
+                if (entry.getKey().equals(usageStatsList.get(i).getPackageName())){
+                    System.out.println(entry.getKey());
+                    name = (String) entry.getValue();
+                    break;
+                }
+            }
+            infoIterator = appNames.entrySet().iterator();
+            customUsageStats.appName = name;
             try {
                 Drawable appIcon = getActivity().getPackageManager()
                         .getApplicationIcon(customUsageStats.usageStats.getPackageName());
@@ -183,6 +193,7 @@ public class UsageFragment extends Fragment {
                 customUsageStats.appIcon = getActivity()
                         .getDrawable(R.drawable.ic_default_app_launcher);
             }
+            if(!name.equals(""))
             customUsageStatsList.add(customUsageStats);
         }
         mUsageListAdapter.setCustomUsageStatsList(customUsageStatsList);
@@ -193,23 +204,7 @@ public class UsageFragment extends Fragment {
     void updatePieChart(List<UsageStats> usageStatsList){
         List<PieEntry> entries = new ArrayList<>();
         float totalTime = 0.0f;
-        Context context =getContext();
-        PackageManager packageManager = context.getPackageManager();
-        List<PackageInfo> list = packageManager.getInstalledPackages(packageManager.GET_UNINSTALLED_PACKAGES);
-        HashMap<String, String> appNames = new HashMap<>();
-        for(PackageInfo packageInfo : list){
-            String appName=packageInfo.applicationInfo.loadLabel(packageManager).toString();
-            //System.out.println(appName);
-            //获取到应用所在包的名字,即在AndriodMainfest中的package的值。
-            String packageName=packageInfo.packageName;
-            //System.out.println(packageName);
-            if((packageInfo.applicationInfo.flags&ApplicationInfo.FLAG_SYSTEM)==0){
-                appNames.put(packageName,appName);
-                System.out.println(packageName);
-                System.out.println(appName);
-            }
-
-        }
+        HashMap<String, String> appNames = getAppPackageNames();
         Iterator infoIterator = appNames.entrySet().iterator();
         for (int i = 0; i<usageStatsList.size();i++){
             UsageStats u = usageStatsList.get(i);
@@ -229,6 +224,8 @@ public class UsageFragment extends Fragment {
                     name = (String) entry.getValue();
                 }
             }
+            infoIterator = appNames.entrySet().iterator();
+            if (name != "")
             entries.add(new PieEntry(time,name));
         }
 
@@ -238,6 +235,25 @@ public class UsageFragment extends Fragment {
         PieData data = new PieData(set);
         mChart.setData(data);
         mChart.invalidate();
+    }
+
+    private HashMap<String,String> getAppPackageNames(){
+        HashMap<String,String> res = new HashMap<>();
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<PackageInfo> list = packageManager.getInstalledPackages(packageManager.GET_UNINSTALLED_PACKAGES);
+        for(PackageInfo packageInfo : list){
+            String appName=packageInfo.applicationInfo.loadLabel(packageManager).toString();
+            //System.out.println(appName);
+            //获取到应用所在包的名字,即在AndriodMainfest中的package的值。
+            String packageName=packageInfo.packageName;
+            //System.out.println(packageName);
+            if((packageInfo.applicationInfo.flags&ApplicationInfo.FLAG_SYSTEM)==0){
+                res.put(packageName,appName);
+                //System.out.println(packageName);
+                //System.out.println(appName);
+            }
+        }
+        return res;
     }
 
     /**
