@@ -1,24 +1,44 @@
 package com.hfad.relife.microphone;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.*;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.hfad.relife.Adapter.AudioRecorderAdapter;
+import com.hfad.relife.Adapter.AudioRecorderDbAdapter;
+import com.hfad.relife.Adapter.NoteDbAdapter;
+import com.hfad.relife.Note.Note;
+import com.hfad.relife.Note.NoteActivity;
+import com.hfad.relife.Note.NoteContentActivity;
 import com.hfad.relife.R;
 import com.hfad.relife.Util.AudioRecorderUtils;
+import com.hfad.relife.Util.DateUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 public class AudioRecordingActivity extends AppCompatActivity implements View.OnTouchListener, AudioRecorderUtils.OnAudioStatusUpdateListener {
 
     private AudioRecorderDialog recoderDialog;
     private AudioRecorderUtils recoderUtils;
-    private ListView listView;
+    private static AudioRecorderAdapter mAudioRecorderAdapter;
+    private static AudioRecorderDbAdapter mAudioRecorderDbAdapter;
+    private RecyclerView mRecyclerView;
     private TextView button;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private Cursor mCursor;
+    private String filepath;
     private long downT;
 
     @Override
@@ -38,11 +58,27 @@ public class AudioRecordingActivity extends AppCompatActivity implements View.On
         recoderDialog = new AudioRecorderDialog(this);
         recoderDialog.setShowAlpha(0.98f);
 
-        recoderUtils = new AudioRecorderUtils(new File(Environment.getExternalStorageDirectory() + "/recoder.amr"));
+        filepath = Environment.getExternalStorageDirectory()+ "/" + DateUtil.time()+".amr";
+        //filepath = Environment.getExternalStorageDirectory() + "/recoder.amr";
+        recoderUtils = new AudioRecorderUtils(new File(filepath));
         recoderUtils.setOnAudioStatusUpdateListener(this);
-//
-//        listView = (ListView) findViewById(android.R.id.list);
-//        listView.setAdapter(new AudioListAdapter(this));
+
+        mAudioRecorderDbAdapter = new AudioRecorderDbAdapter(this);
+        mAudioRecorderDbAdapter.open();
+
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        initialRecyclerView();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mAudioRecorderDbAdapter.close();
     }
 
     @TargetApi(19)
@@ -71,6 +107,8 @@ public class AudioRecordingActivity extends AppCompatActivity implements View.On
                 recoderUtils.stopRecord();
                 recoderDialog.dismiss();
                 button.setBackgroundResource(R.drawable.shape_recorder_btn_normal);
+                mAudioRecorderDbAdapter.createNote(filepath,filepath);
+                mAudioRecorderAdapter.changeCursor(mCursor);
                 return true;
         }
         return false;
@@ -83,5 +121,37 @@ public class AudioRecordingActivity extends AppCompatActivity implements View.On
             recoderDialog.setLevel(level);
             recoderDialog.setTime(System.currentTimeMillis() - downT);
         }
+    }
+
+    public void initialRecyclerView(){
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_recorder_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mCursor = mAudioRecorderDbAdapter.fetchAllNotes();
+        System.out.println("Sqlite :");
+        System.out.println(mCursor.getCount());
+        mAudioRecorderAdapter = new AudioRecorderAdapter(this,mCursor,0);
+        mAudioRecorderAdapter.setImageButtonOnClickListener(new AudioRecorderAdapter.ImageButtonOnClickListener() {
+            @Override
+            public void onPlay(int position) {
+                mCursor.moveToPosition(position);
+                String filepath = mCursor.getString(mCursor.getColumnIndex(AudioRecorderDbAdapter.COL_FILEPATH));
+                System.out.println(filepath);
+                try {
+                    mediaPlayer.setDataSource(filepath);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        mediaPlayer.release();
+                    }
+                });
+            }
+        });
+        mRecyclerView.setAdapter(mAudioRecorderAdapter);
+
     }
 }

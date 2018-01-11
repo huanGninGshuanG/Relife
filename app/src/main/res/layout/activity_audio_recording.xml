@@ -16,21 +16,22 @@
             android:orientation="vertical"
             android:background="#FFFFFF">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_recorder_list"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:layout_marginRight="@dimen/margin_small"
+                android:scrollbars="vertical"
+                android:drawSelectorOnTop="true"
                 android:layout_width="match_parent"
-                android:id="@android:id/list"
-                android:layout_height="0dp"
-                android:divider="#00000000"
-                android:listSelector="@null"
-                android:dividerHeight="5dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+        />
 
         <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="12dp" >
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center">
 
             <TextView
                     android:background="@drawable/selector_recordering_btn"
@@ -39,7 +40,7 @@
                     android:id="@android:id/button1"
                     android:gravity="center"
                     android:text="开始录制"
-                    android:padding="12dp" />
+                    android:padding="12dp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

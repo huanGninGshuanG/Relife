@@ -74,8 +74,8 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) throws IllegalArgumentException {
         UsageStats u = mCustomUsageStatsList.get(position).usageStats;
-        viewHolder.getPackageName().setText(
-                mCustomUsageStatsList.get(position).usageStats.getPackageName());
+        if(mCustomUsageStatsList.get(position).appName.equals(""))return;
+        viewHolder.getPackageName().setText(mCustomUsageStatsList.get(position).appName);
         long lastTimeUsed = mCustomUsageStatsList.get(position).usageStats.getLastTimeUsed();
         long totalTimeInForeground = u.getTotalTimeInForeground();
         int times = 65526;

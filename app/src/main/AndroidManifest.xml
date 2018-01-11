@@ -69,7 +69,7 @@
         </activity>
 
         <activity android:name=".toss.TossActivity">
-            
+
         </activity>
     </application>
 
