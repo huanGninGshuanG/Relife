@@ -73,8 +73,12 @@ public class AudioRecordingActivity extends AppCompatActivity implements View.On
         filepath = Environment.getExternalStorageDirectory()+ "/" + DateUtil.time()+".amr";
         //filepath = Environment.getExternalStorageDirectory() + "/recoder.amr";
         if(ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO)!= PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
         }else{
             recoderUtils = new AudioRecorderUtils(new File(filepath));
@@ -174,6 +178,7 @@ public class AudioRecordingActivity extends AppCompatActivity implements View.On
             @Override
             public void onPlay(int position) {
                 mCursor.moveToPosition(position);
+                mediaPlayer = new MediaPlayer();
                 String filepath = mCursor.getString(mCursor.getColumnIndex(AudioRecorderDbAdapter.COL_FILEPATH));
                 System.out.println(filepath);
                 try {
