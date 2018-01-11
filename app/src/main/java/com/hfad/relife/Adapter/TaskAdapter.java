@@ -45,6 +45,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
     private TaskItem dataModel;
     private TaskItem choosedModel;
     Context mContext;
+    private int alarmId = 0;//闹钟的id
 
     // View lookup cache
     private static class ViewHolder {
@@ -180,7 +181,7 @@ public class TaskAdapter extends ArrayAdapter<TaskItem> implements BottomSheetTi
             //sqlDB.execSQL("UPDATE ToDoList SET DeadlineDate = '" + date + "' WHERE Task='"+choosedModel.getTask()+"'");
             Toast.makeText(getContext(), "update:" + date, Toast.LENGTH_SHORT).show();
             AlarmManagerUtil.setAlarm(getContext(), 0, Integer.valueOf(date.split(":")[0]),
-                    Integer.valueOf(date.split(":")[1].split(" ")[0]), 0, 0, choosedModel.getTask(), 0);
+                    Integer.valueOf(date.split(":")[1].split(" ")[0]), alarmId++, 0, choosedModel.getTask(), 0);
         } catch (SQLiteException e) {
             Toast.makeText(getContext(), e + "", Toast.LENGTH_SHORT).show();
         }
